@@ -1,44 +1,43 @@
 ﻿using System;
 using System.Linq;
 
-namespace Section_07_09
+namespace Section_07_09;
+
+internal class Program
 {
-    class Program
+    private static void Main()
     {
-        static void Main()
-        {
-            const string OriginalUrl =
-                "https://myco.com/po/search?company=computers+";
-            Console.WriteLine($"Original:    '{OriginalUrl}'");
+        const string OriginalUrl =
+            "https://myco.com/po/search?company=computers+";
+        Console.WriteLine($"Original:    '{OriginalUrl}'");
 
-            string escapedUri = Uri.EscapeUriString(OriginalUrl);
-            Console.WriteLine($"Escape URI:  '{escapedUri}'");
+        var escapedUri = Uri.EscapeUriString(OriginalUrl);
+        Console.WriteLine($"Escape URI:  '{escapedUri}'");
 
-            string escapedData = Uri.EscapeDataString(OriginalUrl);
-            Console.WriteLine($"Escape Data: '{escapedData}'");
+        var escapedData = Uri.EscapeDataString(OriginalUrl);
+        Console.WriteLine($"Escape Data: '{escapedData}'");
 
-            string escapedUrl = EscapeUrlParams(OriginalUrl);
-            Console.WriteLine($"Escaped URL: '{escapedUrl}'");
-        }
+        var escapedUrl = EscapeUrlParams(OriginalUrl);
+        Console.WriteLine($"Escaped URL: '{escapedUrl}'");
+    }
 
-        static string EscapeUrlParams(string originalUrl)
-        {
-            const int Base = 0;
-            const int Parms = 1;
-            const int Key = 0;
-            const int Val = 1;
-            string[] parts = originalUrl.Split('?');
-            string[] pairs = parts[Parms].Split('&');
+    private static string EscapeUrlParams(string originalUrl)
+    {
+        const int Base = 0;
+        const int Parms = 1;
+        const int Key = 0;
+        const int Val = 1;
+        var parts = originalUrl.Split('?');
+        var pairs = parts[Parms].Split('&');
 
-            string escapedParms =
-                string.Join('&',
-                    (from pair in pairs
-                     let keyVal = pair.Split('=')
-                     let encodedVal = Url.PercentEncode(keyVal[Val])
-                     select $"{keyVal[Key]}={encodedVal}")
-                    .ToList());
+        var escapedParms =
+            string.Join('&',
+                (from pair in pairs
+                    let keyVal = pair.Split('=')
+                    let encodedVal = Url.PercentEncode(keyVal[Val])
+                    select $"{keyVal[Key]}={encodedVal}")
+                .ToList());
 
-            return $"{parts[Base]}?{escapedParms}";
-        }
+        return $"{parts[Base]}?{escapedParms}";
     }
 }

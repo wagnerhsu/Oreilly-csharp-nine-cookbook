@@ -2,9 +2,9 @@
 
 namespace Section_09_03
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Address addressObjectInit = new()
             {
@@ -19,10 +19,10 @@ namespace Section_09_03
 
             // target typed with ctor init
             Address addressCtorInit = new(
-                street: "567 8th Ave.",
-                city: "Some Place",
-                state: "YY",
-                zip: "12345-7890");
+                "567 8th Ave.",
+                "Some Place",
+                "YY",
+                "12345-7890");
 
             // not allowed
             //addressCtorInit.Zip = "98765";

@@ -2,28 +2,26 @@
 
 namespace Section_09_09
 {
-    public  class AddressService
+    public class AddressService
     {
         public IEnumerable<Address[]> GetAddresses(int perPage)
         {
-            Address[] addresses = GetAddresses();
+            var addresses = GetAddresses();
 
-            for (int i = 0, j = i+perPage; 
-                 i < addresses.Length; 
-                 i+=perPage, j+=perPage)
-            {
+            for (int i = 0, j = i + perPage;
+                 i < addresses.Length;
+                 i += perPage, j += perPage)
                 yield return addresses[i..j];
-            }
         }
 
-        Address[] GetAddresses()
+        private Address[] GetAddresses()
         {
-            int count = 15;
+            var count = 15;
             List<Address> addresses = new();
 
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
-                string streetSuffix =
+                var streetSuffix =
                     i switch
                     {
                         0 => "st",
@@ -33,11 +31,11 @@ namespace Section_09_09
                     };
 
                 addresses.Add(
-                    new(
-                    Street: $"{i+100} {i+1}{streetSuffix} St.",
-                    City: "My Place",
-                    State: "ZZ",
-                    Zip: "12345-7890"));
+                    new Address(
+                        $"{i + 100} {i + 1}{streetSuffix} St.",
+                        "My Place",
+                        "ZZ",
+                        "12345-7890"));
             }
 
             return addresses.ToArray();

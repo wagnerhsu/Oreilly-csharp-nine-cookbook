@@ -2,24 +2,24 @@
 
 namespace Section_09_06
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             MailingAddress mailAddress = new(
-                Street: "567 8th Ave.",
-                City: "Some Place",
-                State: "YY",
-                Zip: "12345-7890",
-                Email: "me@example.com",
-                PreferEmail: true);
+                "567 8th Ave.",
+                "Some Place",
+                "YY",
+                "12345-7890",
+                "me@example.com",
+                true);
 
             ShippingAddress shipAddress = new(
-                street: "567 8th Ave.",
-                city: "Some Place",
-                state: "YY",
-                zip: "12345-7890",
-                deliveryInstructions: "Ring Doorbell");
+                "567 8th Ave.",
+                "Some Place",
+                "YY",
+                "12345-7890",
+                "Ring Doorbell");
 
             Console.WriteLine($"Mail: {mailAddress}");
             Console.WriteLine($"Ship: {shipAddress}");

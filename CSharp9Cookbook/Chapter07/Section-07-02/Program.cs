@@ -1,40 +1,39 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace Section_07_02
+namespace Section_07_02;
+
+internal class Program
 {
-    class Program
+    private static void Main()
     {
-        static void Main()
-        {
-            var crypto = new Crypto();
+        var crypto = new Crypto();
 
-            Console.Write("Please enter text to encrypt: ");
-            string userPlainText = Console.ReadLine();
+        Console.Write("Please enter text to encrypt: ");
+        var userPlainText = Console.ReadLine();
 
-            byte[] key = GenerateKey();
+        var key = GenerateKey();
 
-            byte[] cypherBytes = crypto.Encrypt(userPlainText, key);
+        var cypherBytes = crypto.Encrypt(userPlainText, key);
 
-            string cypherText = Convert.ToBase64String(cypherBytes);
+        var cypherText = Convert.ToBase64String(cypherBytes);
 
-            Console.WriteLine($"Cypher Text: {cypherText}");
+        Console.WriteLine($"Cypher Text: {cypherText}");
 
-            string decryptedPlainText = crypto.Decrypt(cypherBytes, key);
+        var decryptedPlainText = crypto.Decrypt(cypherBytes, key);
 
-            Console.WriteLine($"Plain Text: {decryptedPlainText}");
-        }
+        Console.WriteLine($"Plain Text: {decryptedPlainText}");
+    }
 
-        static byte[] GenerateKey()
-        {
-            const int KeyLength = 32;
+    private static byte[] GenerateKey()
+    {
+        const int KeyLength = 32;
 
-            byte[] key = new byte[KeyLength];
-            var rngRand = new RNGCryptoServiceProvider();
+        var key = new byte[KeyLength];
+        var rngRand = new RNGCryptoServiceProvider();
 
-            rngRand.GetBytes(key);
+        rngRand.GetBytes(key);
 
-            return key;
-        }
+        return key;
     }
 }

@@ -1,12 +1,12 @@
-﻿namespace Section_07_06
-{
-    public class PurchaseOrderService
-    {
-        public string Get(int poID)
-        {
-            // get HTTP request
+﻿namespace Section_07_06;
 
-            return @"{
+public class PurchaseOrderService
+{
+    public string Get(int poID)
+    {
+        // get HTTP request
+
+        return @"{
     ""company_name"": ""Acme, Inc."",
     ""address"": ""123 4th St."",
     ""phone"": ""555-835-7609"",
@@ -24,6 +24,5 @@
         }
     ]
 }";
-        }
     }
 }

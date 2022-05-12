@@ -2,26 +2,26 @@
 
 namespace Section_09_05
 {
-    record Address(
+    internal record Address(
         string Street,
         string City,
         string State,
         string Zip);
 
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Address addressPre = new(
-                Street: "567 8th Ave.",
-                City: "Some Place",
-                State: "YY",
-                Zip: "12345-7890");
+                "567 8th Ave.",
+                "Some Place",
+                "YY",
+                "12345-7890");
 
-            Address addressPost =
-                addressPre with 
-                { 
-                    Street = "569 8th Ave." 
+            var addressPost =
+                addressPre with
+                {
+                    Street = "569 8th Ave."
                 };
 
             Console.WriteLine($"Pre:  {addressPre}");

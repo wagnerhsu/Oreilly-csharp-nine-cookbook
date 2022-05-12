@@ -1,9 +1,8 @@
-﻿namespace Section_07_04
+﻿namespace Section_07_04;
+
+public enum PurchaseOrderStatus
 {
-    public enum PurchaseOrderStatus
-    {
-        Received,
-        Processing,
-        Fulfilled
-    }
+    Received,
+    Processing,
+    Fulfilled
 }

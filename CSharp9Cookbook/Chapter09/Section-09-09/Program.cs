@@ -2,19 +2,16 @@
 
 namespace Section_09_09
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        private static void Main()
         {
             AddressService addressSvc = new();
 
-            foreach (var addresses in 
-                addressSvc.GetAddresses(perPage: 3))
+            foreach (var addresses in
+                     addressSvc.GetAddresses(3))
             {
-                foreach (var address in addresses)
-                {
-                    Console.WriteLine(address);
-                }
+                foreach (var address in addresses) Console.WriteLine(address);
 
                 Console.WriteLine("\nNew Page\n");
             }

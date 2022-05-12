@@ -3,16 +3,16 @@
 Console.WriteLine("Address Info:\n");
 
 Console.Write("Street: ");
-string street = Console.ReadLine();
+var street = Console.ReadLine();
 
 Console.Write("City: ");
-string city = Console.ReadLine();
+var city = Console.ReadLine();
 
 Console.Write("State: ");
-string state = Console.ReadLine();
+var state = Console.ReadLine();
 
 Console.Write("Zip: ");
-string zip = Console.ReadLine();
+var zip = Console.ReadLine();
 
 Console.WriteLine($@"
     Your address is:

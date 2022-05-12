@@ -2,52 +2,51 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Section_07_02
+namespace Section_07_02;
+
+public class Crypto
 {
-    public class Crypto
+    public byte[] Encrypt(string plainText, byte[] key)
     {
-        public byte[] Encrypt(string plainText, byte[] key)
-        {
-            using Aes aes = Aes.Create();
-            aes.Key = key;
+        using var aes = Aes.Create();
+        aes.Key = key;
 
-            using var memStream = new MemoryStream();
-            memStream.Write(aes.IV, 0, aes.IV.Length);
+        using var memStream = new MemoryStream();
+        memStream.Write(aes.IV, 0, aes.IV.Length);
 
-            using var cryptoStream = new CryptoStream(
-                memStream,
-                aes.CreateEncryptor(),
-                CryptoStreamMode.Write);
+        using var cryptoStream = new CryptoStream(
+            memStream,
+            aes.CreateEncryptor(),
+            CryptoStreamMode.Write);
 
-            byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+        var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
 
-            cryptoStream.Write(plainTextBytes);
-            cryptoStream.FlushFinalBlock();
+        cryptoStream.Write(plainTextBytes);
+        cryptoStream.FlushFinalBlock();
 
-            return memStream.ToArray();
-        }
+        return memStream.ToArray();
+    }
 
-        public string Decrypt(byte[] cypherBytes, byte[] key)
-        {
-            using var memStream = new MemoryStream();
-            memStream.Write(cypherBytes);
-            memStream.Position = 0;
+    public string Decrypt(byte[] cypherBytes, byte[] key)
+    {
+        using var memStream = new MemoryStream();
+        memStream.Write(cypherBytes);
+        memStream.Position = 0;
 
-            using var aes = Aes.Create();
+        using var aes = Aes.Create();
 
-            byte[] iv = new byte[aes.IV.Length];
-            memStream.Read(iv, 0, iv.Length);
+        var iv = new byte[aes.IV.Length];
+        memStream.Read(iv, 0, iv.Length);
 
-            using var cryptoStream = new CryptoStream(
-                memStream,
-                aes.CreateDecryptor(key, iv),
-                CryptoStreamMode.Read);
+        using var cryptoStream = new CryptoStream(
+            memStream,
+            aes.CreateDecryptor(key, iv),
+            CryptoStreamMode.Read);
 
-            int plainTextByteLength = cypherBytes.Length - iv.Length;
-            var plainTextBytes = new byte[plainTextByteLength];
-            cryptoStream.Read(plainTextBytes, 0, plainTextByteLength);
+        var plainTextByteLength = cypherBytes.Length - iv.Length;
+        var plainTextBytes = new byte[plainTextByteLength];
+        cryptoStream.Read(plainTextBytes, 0, plainTextByteLength);
 
-            return Encoding.UTF8.GetString(plainTextBytes);
-        }
+        return Encoding.UTF8.GetString(plainTextBytes);
     }
 }

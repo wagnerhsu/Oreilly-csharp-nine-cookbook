@@ -1,16 +1,16 @@
 ﻿namespace Section_09_07
 {
-    class Communications : DeliveryBase
+    internal class Communications : DeliveryBase
     {
         public override MailingAddress GetAddress(string name)
         {
-            return new(
-                Street: "567 8th Ave.",
-                City: "Some Place",
-                State: "YY",
-                Zip: "12345-7890",
-                Email: "me@example.com",
-                PreferEmail: true);
+            return new MailingAddress(
+                "567 8th Ave.",
+                "Some Place",
+                "YY",
+                "12345-7890",
+                "me@example.com",
+                true);
         }
     }
 }

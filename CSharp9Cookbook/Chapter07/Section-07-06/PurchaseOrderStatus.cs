@@ -1,10 +1,10 @@
 ﻿using System;
-namespace Section_07_06
+
+namespace Section_07_06;
+
+public enum PurchaseOrderStatus
 {
-    public enum PurchaseOrderStatus
-    {
-        Received,
-        Processing,
-        Fulfilled
-    }
+    Received,
+    Processing,
+    Fulfilled
 }

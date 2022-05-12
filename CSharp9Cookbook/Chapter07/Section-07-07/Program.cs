@@ -2,81 +2,81 @@
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Section_07_07
+namespace Section_07_07;
+
+internal class Program
 {
-    class Program
+    private static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            XNamespace or = "https://www.oreilly.com";
+        XNamespace or = "https://www.oreilly.com";
 
-            XName address = or + nameof(PurchaseOrder.Address);
-            XName company = or + nameof(PurchaseOrder.CompanyName);
-            XName phone = or + nameof(PurchaseOrder.Phone);
-            XName status = or + nameof(PurchaseOrder.Status);
-            XName info = or + nameof(PurchaseOrder.AdditionalInfo);
-            XName poItems = or + nameof(PurchaseOrder.Items);
-            XName purchaseItem = or + nameof(PurchaseItem);
-            XName description = or + nameof(PurchaseItem.Description);
-            XName price = or + nameof(PurchaseItem.Price);
-            XName quantity = or + nameof(PurchaseItem.Quantity);
-            XName serialNum = nameof(PurchaseItem.SerialNumber);
+        var address = or + nameof(PurchaseOrder.Address);
+        var company = or + nameof(PurchaseOrder.CompanyName);
+        var phone = or + nameof(PurchaseOrder.Phone);
+        var status = or + nameof(PurchaseOrder.Status);
+        var info = or + nameof(PurchaseOrder.AdditionalInfo);
+        var poItems = or + nameof(PurchaseOrder.Items);
+        var purchaseItem = or + nameof(PurchaseItem);
+        var description = or + nameof(PurchaseItem.Description);
+        var price = or + nameof(PurchaseItem.Price);
+        var quantity = or + nameof(PurchaseItem.Quantity);
+        XName serialNum = nameof(PurchaseItem.SerialNumber);
 
-            string poXml = GetXml();
+        var poXml = GetXml();
 
-            XElement poElmt = XElement.Parse(poXml);
+        var poElmt = XElement.Parse(poXml);
 
-            PurchaseOrder po =
-                new PurchaseOrder
-                {
-                    Address = (string)poElmt.Element(address),
-                    CompanyName = (string)poElmt.Element(company),
-                    Phone = (string)poElmt.Element(phone),
-                    Status =
-                        Enum.TryParse(
-                            (string)poElmt.Element(nameof(po.Status)),
-                            out PurchaseOrderStatus poStatus)
+        PurchaseOrder po =
+            new()
+            {
+                Address = (string)poElmt.Element(address),
+                CompanyName = (string)poElmt.Element(company),
+                Phone = (string)poElmt.Element(phone),
+                Status =
+                    Enum.TryParse(
+                        (string)poElmt.Element(nameof(po.Status)),
+                        out PurchaseOrderStatus poStatus)
                         ? poStatus
                         : PurchaseOrderStatus.Received,
-                    AdditionalInfo =
-                        (from addInfo in poElmt.Element(info).Descendants()
-                         select addInfo)
-                        .ToDictionary(
-                            key => key.Name.LocalName,
-                            val => val.Value),
-                    Items =
-                        (from item in poElmt
-                                        .Element(poItems)
-                                        .Descendants(purchaseItem)
-                         select new PurchaseItem
-                         {
-                             Description = (string)item.Element(description),
-                             Price =
+                AdditionalInfo =
+                    (from addInfo in poElmt.Element(info).Descendants()
+                        select addInfo)
+                    .ToDictionary(
+                        key => key.Name.LocalName,
+                        val => val.Value),
+                Items =
+                    (from item in poElmt
+                            .Element(poItems)
+                            .Descendants(purchaseItem)
+                        select new PurchaseItem
+                        {
+                            Description = (string)item.Element(description),
+                            Price =
                                 decimal.TryParse(
                                     (string)item.Element(price),
-                                    out decimal itemPrice)
-                                ? itemPrice
-                                : 0m,
-                             Quantity =
+                                    out var itemPrice)
+                                    ? itemPrice
+                                    : 0m,
+                            Quantity =
                                 float.TryParse(
                                     (string)item.Element(quantity),
-                                    out float qty)
-                                ? qty
-                                : 0f,
-                             SerialNumber = (string)item.Attribute(serialNum)
-                         })
-                        .ToList()
-                };
+                                    out var qty)
+                                    ? qty
+                                    : 0f,
+                            SerialNumber = (string)item.Attribute(serialNum)
+                        })
+                    .ToList()
+            };
 
-            Console.WriteLine($"{po.CompanyName}");
-            Console.WriteLine($"{po.AdditionalInfo["Terms"]}");
-            Console.WriteLine($"{po.Items[0].Description}");
-            Console.WriteLine($"{po.Items[0].SerialNumber}");
-        }
+        Console.WriteLine($"{po.CompanyName}");
+        Console.WriteLine($"{po.AdditionalInfo["Terms"]}");
+        Console.WriteLine($"{po.Items[0].Description}");
+        Console.WriteLine($"{po.Items[0].SerialNumber}");
+    }
 
-        static string GetXml()
-        {
-            return @"
+    private static string GetXml()
+    {
+        return @"
 <PurchaseOrder xmlns=""https://www.oreilly.com"">
   <Address>123 4th St.</Address>
   <CompanyName>Acme, Inc.</CompanyName>
@@ -94,6 +94,5 @@ namespace Section_07_07
     </PurchaseItem>
   </Items>
 </PurchaseOrder>";
-        }
     }
 }

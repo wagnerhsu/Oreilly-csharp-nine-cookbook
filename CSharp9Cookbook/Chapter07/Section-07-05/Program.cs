@@ -2,39 +2,37 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Section_07_05
+namespace Section_07_05;
+
+internal class Program
 {
-    class Program
+    private static void Main()
     {
-        static void Main()
+        var poJson =
+            new PurchaseOrderService()
+                .Get(123);
+
+        var jsonOptions = new JsonSerializerOptions
         {
-            string poJson =
-                new PurchaseOrderService()
-                    .Get(poID: 123);
+            AllowTrailingCommas = true,
+            Converters = { new PurchaseOrderStatusConverter() },
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = new SnakeCaseNamingPolicy(),
+            WriteIndented = true
+        };
 
-            var jsonOptions = new JsonSerializerOptions
-            {
-                AllowTrailingCommas = true,
-                Converters =
-                {
-                    new PurchaseOrderStatusConverter()
-                },
-                PropertyNameCaseInsensitive = true,
-                PropertyNamingPolicy = new SnakeCaseNamingPolicy(),
-                WriteIndented = true
-            };
-
-            PurchaseOrder po =
-                JsonSerializer
+        var po =
+            JsonSerializer
                 .Deserialize<PurchaseOrder>(poJson, jsonOptions);
 
-            Console.WriteLine($"{po.CompanyName}");
-            Console.WriteLine($"{po.AdditionalInfo["terms"]}");
-            Console.WriteLine($"{po.Items[0].Description}");
+        Console.WriteLine($"{po.CompanyName}");
+        Console.WriteLine($"{po.AdditionalInfo["terms"]}");
+        Console.WriteLine($"{po.Items[0].Description}");
 
-            string poJson2 = JsonSerializer.Serialize(po, jsonOptions);
+        var poJson2 = JsonSerializer.Serialize(po, jsonOptions);
 
-            Console.WriteLine(poJson2);
-        }
+        Console.WriteLine(poJson2);
+        Console.WriteLine("Default serialize:");
+        Console.WriteLine(JsonSerializer.Serialize(po));
     }
 }

@@ -1,21 +1,21 @@
 ﻿namespace Section_09_02
 {
-    class Program
+    internal class Program
     {
         // doesn't work at this level
         // var address = new Address();
 
         // this still works
-        Address addressOld = new Address();
+        private Address addressOld = new();
 
         // new target typed field
-        Address addressNew = new();
+        private Address addressNew = new();
 
-        static void Main()
+        private static void Main()
         {
             // these still work
             var addressLocalVar = new Address();
-            Address addressLocalOld = new Address();
+            var addressLocalOld = new Address();
 
             // new target typed local variable
             Address addressLocalNew = new();
@@ -24,17 +24,17 @@
             Address addressObjectInit = new()
             {
                 Street = "123 4th St.",
-                City =   "My City",
-                State =  "ZZ",
-                Zip =    "55555-3333"
+                City = "My City",
+                State = "ZZ",
+                Zip = "55555-3333"
             };
 
             // target typed with ctor init
             Address addressCtorInit = new(
-                street: "567 8th Ave.",
-                city:   "Some Place",
-                state:  "YY",
-                zip:    "12345-7890");
+                "567 8th Ave.",
+                "Some Place",
+                "YY",
+                "12345-7890");
         }
     }
 }

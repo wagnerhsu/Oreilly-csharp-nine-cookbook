@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Section_09_08
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        private static void Main()
         {
-            IEnumerable<Address> addresses = GetAddresses();
+            var addresses = GetAddresses();
 
             foreach (var address in addresses)
             {
@@ -18,20 +18,20 @@ namespace Section_09_08
             }
         }
 
-        static IEnumerable<Address> GetAddresses()
+        private static IEnumerable<Address> GetAddresses()
         {
             return new List<Address>
             {
-                new Address(
-                    Street: "567 8th Ave.",
-                    City: "Some Place",
-                    State: "YY",
-                    Zip: "12345-7890"),
-                new Address(
-                    Street: "569 8th Ave.",
-                    City: "Some Place",
-                    State: "YY",
-                    Zip: "12345-7890")
+                new(
+                    "567 8th Ave.",
+                    "Some Place",
+                    "YY",
+                    "12345-7890"),
+                new(
+                    "569 8th Ave.",
+                    "Some Place",
+                    "YY",
+                    "12345-7890")
             };
         }
     }

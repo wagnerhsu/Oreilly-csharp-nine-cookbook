@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Text.Json;
 
-namespace Section_07_04
+namespace Section_07_04;
+
+public class PurchaseOrderService
 {
-    public class PurchaseOrderService
+    public void View(PurchaseOrder po)
     {
-        public void View(PurchaseOrder po)
-        {
-            var jsonOptions = new JsonSerializerOptions
-            {
-                WriteIndented = true
-            };
+        var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
 
-            string poJson = JsonSerializer.Serialize(po, jsonOptions);
+        var poJson = JsonSerializer.Serialize(po, jsonOptions);
 
-            // send HTTP request
+        // send HTTP request
 
-            Console.WriteLine(poJson);
-        }
+        Console.WriteLine(poJson);
     }
 }
